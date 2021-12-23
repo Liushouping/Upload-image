@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片上傳</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
+        authDomain: "upload-image-78764.firebaseapp.com",
+        projectId: "upload-image-78764",
+        storageBucket: "upload-image-78764.appspot.com",
+        messagingSenderId: "376613716540",
+        appId: "1:376613716540:web:f673cf6b0a60fdc7ee7939",
+        measurementId: "G-FZW74ZJ1K3"
+      };
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+</head>
+<body>
+<div class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-8 sm:px-6 lg:px-12 bg-gray-500 relative items-center">
+    <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+    <div class="sm:max-w-lg w-full p-10 bg-white rounded-xl z-10">
+        <div class="text-center">
+            <h2 class="mt-5 text-3xl font-bold text-gray-700">
+                圖片上傳
+            </h2>
+        </div>
+        <form class="mt-4 space-y-3" action="#" method="POST">
+                    <div class="grid grid-cols-1 space-y-2">
+                            <label class="text-sm font-bold text-gray-500 tracking-wide">圖片網址</label>
+                            <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="text" id="url" value="">
+
+                            <button type="button" class="w-full flex justify-center p-2 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-lg rounded-lg focus:border-4 border-indigo-300" onclick="copyToClipBoard()">複製<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg></button>
+                    </div>
+                    <div class="grid grid-cols-1 space-y-2">
+                                    <label class="text-sm font-bold text-gray-500 tracking-wide">上傳圖片</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                                <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
+                                    -<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                    <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                                    <img class="has-mask h-36 object-center" src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg" alt="freepik image">
+                                    </div>
+                                </div>
+                                <input type="file" class="hidden" id="fileButton"  value="upload"  id="fileButton">
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                    <progress value="0" max="100" id="uploader" class="w-full mt-3">0%</progress>
+                    </div>
+        </form>
+    </div>
+</div>
+
+<script>
+        var config = {
+            apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
+            authDomain: "upload-image-78764.firebaseapp.com",
+            projectId: "upload-image-78764",
+            storageBucket: "upload-image-78764.appspot.com",
+            messagingSenderId: "376613716540",
+            appId: "1:376613716540:web:f673cf6b0a60fdc7ee7939",
+            measurementId: "G-FZW74ZJ1K3"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        var fbBucketName = 'images';
+        var uploader = document.getElementById('uploader');
+        var fileButton = document.getElementById('fileButton');
+
+        fileButton.addEventListener('change', function (e) {
+
+            console.log('file upload event', e);
+
+            var file = e.target.files[0];
+
+            var storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+
+            var uploadTask = storageRef.put(file);
+
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, 
+                function (snapshot) {
+
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = progress;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: 
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: 
+                            console.log('Upload is running');
+                            break;
+                    }
+                }, function (error) {
+
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+
+                            break;
+
+                        case 'storage/canceled':
+
+                            break;
+
+                        case 'storage/unknown':
+
+                            break;
+                    }
+                }, function () {
+                    
+                    var downloadURL = uploadTask.snapshot.downloadURL;
+                    document.getElementById("url").value=downloadURL;
+                    console.log('downloadURL', downloadURL);
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+
+                    Toast.fire({
+                      icon: 'success',
+                      title: '您的圖片完成上傳。'
+                    })
+                });
+
+        });
+
+        function copyToClipBoard() {
+
+            var content = document.getElementById('url');
+            
+            content.select();
+            document.execCommand('copy');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: '你已經完成複製動作。'
+            })
+        }
+    </script>
+</body>
+</html>
