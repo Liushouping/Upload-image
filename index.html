@@ -26,6 +26,22 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
+    <style>
+        .pr {
+            background: #ededed;
+        }
+        progress::-webkit-progress-bar {
+            background: #ededed;
+            border-radius: 8px;
+        }
+        progress::-webkit-progress-value {
+            background: #6366F1;
+            border-radius: 8px;
+        }
+        .pr.alert::-webkit-progress-value {
+            background: red;
+        }
+    </style>
 </head>
 <body>
 <div class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-8 sm:px-6 lg:px-12 bg-gray-500 relative items-center">
@@ -73,7 +89,8 @@
                     <div>
                     <div class="grid grid-cols-1 space-y-2">
                         <label class="text-sm font-bold text-gray-500 tracking-wide">上傳狀態：(綠色為完成上傳)</label>
-                        <progress value="0" max="100" id="uploader" class="w-full text-gray-900 mt-3">0%</progress>
+                        <progress value="0" max="100" id="uploader" class="pr w-full text-red-300 bg-indigo-500 mt-3 h-1">0%</progress>
+
                     </div>
                     </div>
         </form>
