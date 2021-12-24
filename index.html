@@ -30,15 +30,15 @@
 <body>
 <div class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-8 sm:px-6 lg:px-12 bg-gray-500 relative items-center">
     <div class="absolute bg-gray-600 inset-0 z-0"></div>
-    <div class="sm:max-w-lg w-full p-10 bg-white shadow-2xl rounded-xl z-10">
+    <div class="sm:max-w-lg w-full p-8 bg-white shadow-2xl rounded-xl z-10">
         <div class="text-center">
-            <h2 class="mt-5 text-4xl font-black text-gray-700">
+            <h2 class="mt-0 text-4xl font-black text-gray-700">
                 圖片上傳
             </h2>
         </div>
         <form class="mt-4 space-y-3" action="#" method="POST">
                     <div class="grid grid-cols-1 space-y-4">
-                            <label class="text-sm font-bold text-gray-500 tracking-wide">圖片網址</label>
+                            <label class="text-sm font-bold text-gray-500 tracking-wide">圖片網址：</label>
                             <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="text" id="url" value="" disabled>
 
                             <div class="flex space-x-4">
@@ -53,11 +53,11 @@
                             </div>
                     </div>
                     <div class="grid grid-cols-1 space-y-2">
-                                    <label class="text-sm font-bold text-gray-500 tracking-wide">上傳圖片</label>
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">上傳圖片：(拖移圖檔或者點擊圖示)</label>
                         <div class="flex items-center justify-center w-full">
                             <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
                                 <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
-                                    -<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-400 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                     </svg>
                                     <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
@@ -69,7 +69,10 @@
                         </div>
                     </div>
                     <div>
-                    <progress value="0" max="100" id="uploader" class="w-full mt-3">0%</progress>
+                    <div class="grid grid-cols-1 space-y-2">
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">上傳狀態：(灰色尚未，綠色完成)</label>
+                        <progress value="0" max="100" id="uploader" class="w-full text-gray-900 mt-3">0%</progress>
+                    </div>
                     </div>
         </form>
     </div>
@@ -160,9 +163,6 @@
         function copyToClipBoard() {
 
             var content = document.getElementById('url');
-            
-            content.select();
-            document.execCommand('copy');
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -173,14 +173,16 @@
                 toast.addEventListener('mouseenter', Swal.stopTimer)
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
               }
-            })
+            });
+            
+                content.select();
+                document.execCommand('copy');
 
-            
-            Toast.fire({
-                icon: 'success',
-                title: '你已經完成複製動作。'
-            })
-            
+                Toast.fire({
+                    icon: 'success',
+                    title: '你已經完成複製動作。'
+                });
+
         }
     </script>
 </body>
