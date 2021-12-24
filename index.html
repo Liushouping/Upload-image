@@ -12,19 +12,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
-        authDomain: "upload-image-78764.firebaseapp.com",
-        projectId: "upload-image-78764",
-        storageBucket: "upload-image-78764.appspot.com",
-        messagingSenderId: "376613716540",
-        appId: "1:376613716540:web:f673cf6b0a60fdc7ee7939",
-        measurementId: "G-FZW74ZJ1K3"
-      };
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+      // const firebaseConfig = {
+      //   apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
+      //   authDomain: "upload-image-78764.firebaseapp.com",
+      //   projectId: "upload-image-78764",
+      //   storageBucket: "upload-image-78764.appspot.com",
+      //   messagingSenderId: "376613716540",
+      //   appId: "1:376613716540:web:f673cf6b0a60fdc7ee7939",
+      //   measurementId: "G-FZW74ZJ1K3"
+      // };
+      // const app = initializeApp(firebaseConfig);
+      // const analytics = getAnalytics(app);
     </script>
     <style>
         .pr {
@@ -59,7 +59,7 @@
         <form class="mt-4 space-y-3" action="#" method="POST">
                     <div class="grid grid-cols-1 space-y-2">
                             <label class="text-sm font-bold text-gray-500 tracking-wide">圖片網址：</label>
-                            <input class="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="text" id="url" value="" disabled>
+                            <input class="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="text" id="url" value="">
 
                             <div class="flex space-x-4">
     
@@ -90,7 +90,6 @@
                     <div class="grid grid-cols-1 space-y-2">
                         <label class="text-sm font-bold text-gray-500 tracking-wide">上傳狀態：(綠色為完成上傳)</label>
                         <progress value="0" max="100" id="uploader" class="pr w-full text-red-300 bg-indigo-500 mt-3 h-1">0%</progress>
-
                     </div>
                     </div>
         </form>
@@ -182,6 +181,10 @@
         function copyToClipBoard() {
 
             var content = document.getElementById('url');
+            content.select();
+
+            document.execCommand('copy');
+
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -193,14 +196,11 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
               }
             });
-            
-                content.select();
-                document.execCommand('copy');
 
-                Toast.fire({
-                    icon: 'success',
-                    title: '你已經完成複製動作。'
-                });
+            Toast.fire({
+                icon: 'success',
+                title: '你已經完成複製動作。'
+            });
 
         }
     </script>
