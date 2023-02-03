@@ -29,7 +29,7 @@
 </head>
 <body>
 <div 
-class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-8 sm:px-6 lg:px-12 bg-gray-100 relative items-center tracking-widest subpixel-antialiased">
+class="relative min-h-screen flex items-center justify-center py-12 px-8 sm:px-6 lg:px-12 relative items-center tracking-widest subpixel-antialiased bg-gray-100">
     <div class="sm:max-w-lg w-full p-8 bg-white shadow-md rounded-xl z-10 relative">
         <div class="text-center">
             <div>
@@ -138,10 +138,10 @@ function uploadFile(file) {
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer)
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+            // }
       });
 
       Toast.fire({
@@ -153,24 +153,43 @@ function uploadFile(file) {
 
 function copyToClipBoard() {
   const content = document.getElementById('url');
-  content.select();
-  document.execCommand('copy');
-  const Toast = Swal.mixin({
+  if (!content.value) {
+    const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer)
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+            // }
+      });
+
+      Toast.fire({
+            icon: 'error',
+            title: '複製失敗'
+      });
+  } else {
+      content.select();
+      document.execCommand('copy');
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer)
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+            // }
       });
 
       Toast.fire({
             icon: 'success',
             title: '你已經完成上傳。'
       });
+    }
 }
 
     </script>
