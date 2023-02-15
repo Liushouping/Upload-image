@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
         body,html {
@@ -46,7 +47,7 @@ class="relative min-h-screen flex items-center justify-center py-6 px-8 sm:px-6 
         <form class="mt-4 space-y-3" action="#" method="POST">
                     <div class="grid grid-cols-1 space-y-2">
                             <label class="text-sm font-black text-gray-500 tracking-wide">Url：</label>
-                            <input class="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 bg-gray-50" type="text" id="url" value="" readonly>
+                            <input class="text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 bg-gray-50 text-gray-500" type="text" id="url" value="" readonly>
 
                             <div class="flex space-x-4">
     
@@ -65,11 +66,11 @@ class="relative min-h-screen flex items-center justify-center py-6 px-8 sm:px-6 
                             <label 
                             id="uploadArea"
                             class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center hover:opacity-40 focus:opacity-40 duration-500">
-                                <div class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
-                                    <div class="flex flex-auto max-h-48 w-2/6 mx-auto mt-2">
-                                    <img class="has-mask h-36 object-center" src="./image.svg">
+                                <div class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                                    <div class="flex flex-auto max-h-48 w-2/6 mx-auto mt-2 flex justify-center items-center">
+                                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_GxMZME.json"  background="transparent"  speed="1"  style="width: 150px; height: 150px;"  loop  autoplay></lottie-player>
                                     </div>
-                                    <p class="pointer-none text-gray-500 text-sm mt-1 font-thin">Select</p>
+                                    <p class="pointer-none text-gray-500 text-sm mt-1 font-thin tracking-[1px]">Select</p>
                                 </div>
                                 <input type="file" class="hidden" id="fileButton"  value="upload"  id="fileButton">
                             </label>
@@ -150,7 +151,7 @@ function uploadFile(file) {
 
       Toast.fire({
             icon: 'success',
-            title: '你已經完成上傳。'
+            title: 'You have finished uploading'
       });
     });
 }
@@ -172,7 +173,7 @@ function copyToClipBoard() {
 
       Toast.fire({
             icon: 'error',
-            title: '複製失敗'
+            title: 'You have not uploaded a file'
       });
   } else {
       content.select();
@@ -191,7 +192,7 @@ function copyToClipBoard() {
 
       Toast.fire({
             icon: 'success',
-            title: '你已經完成上傳。'
+            title: 'Copy successfully'
       });
     }
 }
