@@ -130,19 +130,16 @@ const uploader = document.getElementById('uploader');
 const fileButton = document.getElementById('fileButton');
 const uploadArea = document.getElementById('uploadArea');
 
-// 监听文件选择
 fileButton.addEventListener('change', (e) => {
   uploadFile(e.target.files[0]);
 });
 
-// 监听拖放文件
 uploadArea.addEventListener('drop', (e) => {
   e.preventDefault();
   const file = e.dataTransfer.files[0];
   uploadFile(file);
 });
 
-// 处理拖放文件事件
 uploadArea.addEventListener('dragover', (e) => {
   e.preventDefault();
 });
@@ -166,10 +163,6 @@ function uploadFile(file) {
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-            // didOpen: (toast) => {
-            //     toast.addEventListener('mouseenter', Swal.stopTimer)
-            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
-            // }
       });
 
       Toast.fire({
@@ -188,10 +181,6 @@ function copyToClipBoard() {
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-            // didOpen: (toast) => {
-            //     toast.addEventListener('mouseenter', Swal.stopTimer)
-            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
-            // }
       });
 
       Toast.fire({
@@ -207,10 +196,6 @@ function copyToClipBoard() {
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-            // didOpen: (toast) => {
-            //     toast.addEventListener('mouseenter', Swal.stopTimer)
-            //     toast.addEventListener('mouseleave', Swal.resumeTimer)
-            // }
       });
 
       Toast.fire({
