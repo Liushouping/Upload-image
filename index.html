@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
         body,html {
@@ -35,13 +37,17 @@
 <body>
 <div 
 class="relative min-h-screen flex items-center justify-center py-6 px-8 sm:px-6 lg:px-12 relative items-center tracking-widest subpixel-antialiased bg-gray-100">
-    <div class="sm:max-w-lg w-full p-8 bg-white shadow-md rounded-xl z-10 relative border-4 border-gray-100">
+    <div 
+    data-aos="fade-right"
+    data-aos-easing="linear"
+    data-aos-duration="800"
+    class="sm:max-w-lg w-full p-8 bg-white shadow-md rounded-xl z-10 relative border-4 border-gray-100 relative">
         <div class="text-center">
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-300 fill-current w-6 h-6" viewBox="0 0 24 24"><path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/></svg>
             </div>
-            <h2 class="mt-1 text-[48px] text-gray-800 tracking-[1px]">
-                File Upload
+            <h2 class="mt-1 text-[48px] tracking-[1px] bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-200">
+                File Upload.
             </h2>
         </div>
         <form class="mt-4 space-y-3" action="#" method="POST">
@@ -78,7 +84,7 @@ class="relative min-h-screen flex items-center justify-center py-6 px-8 sm:px-6 
                     </div>
                     <div>
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-black text-gray-500 tracking-wide flex">Status：<span class="text-xs font-medium text-red-500 flex justify-end items-center">
+                        <label class="text-sm font-black text-gray-500 tracking-wide flex">Status：<span class="text-xs text-red-500 flex justify-end items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>Progress bar</span>
@@ -91,6 +97,8 @@ class="relative min-h-screen flex items-center justify-center py-6 px-8 sm:px-6 
 </div>
 
 <script>
+AOS.init();
+
 const config = {
   apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
   authDomain: "upload-image-78764.firebaseapp.com",
