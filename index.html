@@ -105,12 +105,15 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
                     </div>
                     <div>
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-black text-gray-500 tracking-wide flex">Status：<span class="text-xs text-indigo-400 flex justify-end items-center">
+                        <label class="text-sm font-black text-gray-500 tracking-wide flex">Status：<span class="text-xs text-red-400 flex justify-end items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>Progress bar</span>
+                            </svg>Limit upload size to 1 GB</span>
                         </label>
-                        <progress value="0" max="100" id="uploader" class="pr w-full text-red-300 bg-indigo-500 mt-3 h-1 rounded-lg">0%</progress>
+                        <div class="flex flex-row space-x-2 w-full justify-between items-center mt-3">
+                            <progress value="0" max="100" id="uploader" class="pr w-full text-red-300 bg-indigo-500 h-1 rounded-lg"></progress>
+                            <span id="progress-text" class="text-indigo-300 text-[12px]">0%</span>
+                        </div>
                     </div>
                     </div>
         </form>
@@ -135,6 +138,7 @@ const fbBucketName = 'images';
 const uploader = document.getElementById('uploader');
 const fileButton = document.getElementById('fileButton');
 const uploadArea = document.getElementById('uploadArea');
+const progressText = document.getElementById('progress-text');
 
 fileButton.addEventListener('change', (e) => {
   uploadFile(e.target.files[0]);
@@ -156,8 +160,9 @@ function uploadFile(file) {
 
   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, 
     (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      const progress = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
       uploader.value = progress;
+      progressText.innerText = progress + '%';
     }, (error) => {
       console.error(error);
     }, () => {
