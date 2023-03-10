@@ -15,6 +15,7 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js" defer></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
@@ -182,7 +183,7 @@ function uploadFile(file) {
         timer: 3000,
         timerProgressBar: true,
       });
-
+      play();
       Toast.fire({
             icon: 'success',
             title: 'You have finished uploading'
@@ -221,6 +222,14 @@ function copyToClipBoard() {
             title: 'Copy successfully'
       });
     }
+}
+
+function play() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
 }
 
     </script>
