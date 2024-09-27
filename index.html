@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload</title>
+    <title>檔案上傳</title>
     <link rel="icon" href="/favicon.png">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -67,7 +68,7 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-300 fill-current w-6 h-6" viewBox="0 0 24 24"><path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/></svg>
             </div>
             <h2 class="mt-1 text-[48px] tracking-[1px] bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-200 flex flex-row items-end justify-center">
-                File Upload.
+                File upload
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 fill-gray-400">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                 </svg>
@@ -91,7 +92,7 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
                             </div>
                     </div>
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-black text-gray-500 tracking-wide">Uupload：</label>
+                        <label class="text-sm font-black text-gray-500 tracking-wide">Upload：</label>
                         <div class="flex items-center justify-center w-full">
                             <label 
                             id="uploadArea"
@@ -100,7 +101,7 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
                                     <div class="flex flex-auto max-h-48 w-2/6 mx-auto mt-2 flex justify-center items-center">
                                     <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_GxMZME.json"  background="transparent"  speed="1"  style="width: 150px; height: 150px;"  loop  autoplay></lottie-player>
                                     </div>
-                                    <p class="pointer-none text-gray-500 text-sm mt-1 font-thin tracking-[1px]">Select</p>
+                                    <p class="pointer-none text-gray-500 text-sm mt-1 font-thin tracking-[1px]">Select file</p>
                                 </div>
                                 <input type="file" class="hidden" id="fileButton"  value="upload"  id="fileButton">
                             </label>
@@ -111,7 +112,7 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
                         <label class="text-sm font-black text-gray-500 tracking-wide flex">Status：<span class="text-xs text-red-400 flex justify-end items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>Limit upload size to 1 GB</span>
+                            </svg>Upload size limit is 1 GB</span>
                         </label>
                         <div class="flex flex-row space-x-2 w-full justify-between items-center mt-3">
                             <progress value="0" max="100" id="uploader" class="pr w-full text-red-300 bg-indigo-500 h-1 rounded-lg"></progress>
@@ -123,6 +124,63 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
     </div>
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDAvR9kREQ9CgT6HXWVhjSFSU9XNLWbw6A",
+    authDomain: "upload-b41d2.firebaseapp.com",
+    projectId: "upload-b41d2",
+    storageBucket: "upload-b41d2.appspot.com",
+    messagingSenderId: "1008189053208",
+    appId: "1:1008189053208:web:9f24c1ab79f8500364a66d",
+    measurementId: "G-FWKSH9QTWX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const storage = getStorage(app);
+
+  function uploadFile(file) {
+    // 生成一个唯一的文件名
+    const uniqueFileName = Date.now() + '_' + file.name;
+    const storageRef = ref(storage, uniqueFileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        uploader.value = progress;
+        progressText.innerText = progress + '%';
+      }, 
+      (error) => {
+        console.error(error);
+      }, 
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          document.getElementById("url").value = downloadURL;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+          play();
+          Toast.fire({
+            icon: 'success',
+            title: 'Complete upload'
+          });
+        });
+      }
+    );
+  }
+
+  window.uploadFile = uploadFile;
+</script>
+
 <script>
 AOS.init();
 
@@ -131,18 +189,6 @@ VanillaTilt.init(document.querySelector(".element"), {
         speed: 5000
 });
 
-const config = {
-  apiKey: "AIzaSyDv4rimZ8elTTFmxK9ui8d-bGoo-2MZ-LM",
-  authDomain: "upload-image-78764.firebaseapp.com",
-  projectId: "upload-image-78764",
-  storageBucket: "upload-image-78764.appspot.com",
-  messagingSenderId: "376613716540",
-  appId: "1:376613716540:web:f673cf6b0a60fdc7ee7939",
-  measurementId: "G-FZW74ZJ1K3"
-};
-firebase.initializeApp(config);
-
-const fbBucketName = 'images';
 const uploader = document.getElementById('uploader');
 const fileButton = document.getElementById('fileButton');
 const uploadArea = document.getElementById('uploadArea');
@@ -162,35 +208,6 @@ uploadArea.addEventListener('dragover', (e) => {
   e.preventDefault();
 });
 
-function uploadFile(file) {
-  const storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
-  const uploadTask = storageRef.put(file);
-
-  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, 
-    (snapshot) => {
-      const progress = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      uploader.value = progress;
-      progressText.innerText = progress + '%';
-    }, (error) => {
-      console.error(error);
-    }, () => {
-      const downloadURL = uploadTask.snapshot.downloadURL;
-      document.getElementById("url").value = downloadURL;
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      play();
-      Toast.fire({
-            icon: 'success',
-            title: 'You have finished uploading'
-      });
-    });
-}
-
 function copyToClipBoard() {
   const content = document.getElementById('url');
   if (!content.value) {
@@ -204,7 +221,7 @@ function copyToClipBoard() {
 
       Toast.fire({
             icon: 'error',
-            title: 'You have not uploaded a file'
+            title: 'You have not uploaded the file yet'
       });
   } else {
       content.select();
@@ -219,7 +236,7 @@ function copyToClipBoard() {
 
       Toast.fire({
             icon: 'success',
-            title: 'Copy successfully'
+            title: 'Copied successfully'
       });
     }
 }
