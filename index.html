@@ -160,22 +160,63 @@ class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px
       }, 
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          document.getElementById("url").value = downloadURL;
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-          });
-          play();
-          Toast.fire({
-            icon: 'success',
-            title: 'Complete upload'
-          });
+          // 调用函数来创建短 URL
+          createShortUrl(downloadURL);
         });
       }
     );
+  }
+
+  // 新增函数：创建短 URL
+  async function createShortUrl(longUrl) {
+    const apiKey = '4070ff49d794e73517553b663c974755ecd0b434919a04df8a38b58d65165567c4f5d6';
+    const apiEndpoint = 'https://api.reurl.cc/shorten';
+    
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'reurl-api-key': apiKey
+        },
+        body: JSON.stringify({ url: longUrl })
+      });
+
+      if (!response.ok) {
+        throw new Error('短网址创建失败');
+      }
+
+      const data = await response.json();
+      const shortUrl = data.short_url;
+
+      document.getElementById("url").value = shortUrl;
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      play();
+      Toast.fire({
+        icon: 'success',
+        title: '上传完成，已生成短链接'
+      });
+    } catch (error) {
+      console.error('创建短网址时出错：', error);
+      document.getElementById("url").value = longUrl; // 如果失败，使用原始长 URL
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: 'warning',
+        title: '上传完成，但短链接生成失败'
+      });
+    }
   }
 
   window.uploadFile = uploadFile;
